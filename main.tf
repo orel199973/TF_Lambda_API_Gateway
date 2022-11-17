@@ -43,12 +43,6 @@ resource "aws_lambda_function" "hello_world" {
   role = aws_iam_role.lambda_exec.arn
 }
 
-# resource "aws_cloudwatch_log_group" "hello_world" {
-#   name = "/aws/lambda/${aws_lambda_function.hello_world.function_name}"
-
-#   retention_in_days = 30
-# }
-
 resource "aws_iam_role" "lambda_exec" {
   name = "serverless_lambda"
 
@@ -84,24 +78,6 @@ resource "aws_apigatewayv2_stage" "lambda" {
 
   name        = "serverless_lambda_stage"
   auto_deploy = true
-
-  # access_log_settings {
-  #   destination_arn = aws_cloudwatch_log_group.api_gw.arn
-
-  #   format = jsonencode({
-  #     requestId               = "$context.requestId"
-  #     sourceIp                = "$context.identity.sourceIp"
-  #     requestTime             = "$context.requestTime"
-  #     protocol                = "$context.protocol"
-  #     httpMethod              = "$context.httpMethod"
-  #     resourcePath            = "$context.resourcePath"
-  #     routeKey                = "$context.routeKey"
-  #     status                  = "$context.status"
-  #     responseLength          = "$context.responseLength"
-  #     integrationErrorMessage = "$context.integrationErrorMessage"
-  #     }
-  #   )
-  # }
 }
 
 resource "aws_apigatewayv2_integration" "hello_world" {
